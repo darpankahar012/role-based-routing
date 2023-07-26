@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Router, Route, Switch } from "react-router-dom";
+import ErrorBoundary from './ErrorBoundary'
+import { createBrowserHistory } from 'history';
+import Front from "./routes/Front";
+import PrivateRoute from "./routes/PrivateRoute";
+import Main from "./routes/Main";
 
 function App() {
+  const history = createBrowserHistory();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router history={history}>
+      <ErrorBoundary>
+        <Switch>
+          <PrivateRoute path="/dashboard" component={Main} />
+          <Route path="/" component={Front} />
+        </Switch>
+      </ErrorBoundary>
+    </Router>
+  )
 }
 
-export default App;
+export default App
